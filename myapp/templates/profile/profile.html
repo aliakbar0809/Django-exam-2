@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Профиль</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+    body {
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 min-h-screen flex items-center justify-center">
+  
+
+  <div class="bg-white bg-opacity-20 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg fade-up">
+    <h2 class="text-3xl font-bold text-white text-center mb-6">Профиль пользователя</h2>
+
+    {% if profile.photo %}
+      <img src="{{ profile.photo.url }}" alt="Фото профиля" class="mx-auto rounded-full mb-4 w-32 h-32 object-cover">
+    {% endif %}
+
+    <p><strong>Имя:</strong> {{ profile.user.username }}</p>
+    <p><strong>Email:</strong> {{ profile.user.email }}</p>
+    <p><strong>О себе:</strong> {{ profile.bio }}</p>
+
+    <div class="mt-6 flex flex-col gap-4">
+      <a href="{% url 'product_create' %}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 text-center">
+        Добавить продукт
+      </a>
+      <a href="{% url 'product_list' %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 text-center">
+        Список продуктов
+      </a>
+
+      <div class="flex justify-between">
+        <a href="{% url 'profile_update' %}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+           Редактировать
+        </a>
+        <a href="{% url 'profile_delete' %}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+          Удалить
+        </a>
+      </div>
+    </div>
+  </div> 
+  
+
+</body>
+</html>

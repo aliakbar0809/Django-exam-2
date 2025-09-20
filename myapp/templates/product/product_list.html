@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Список продуктов</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 min-h-screen p-6">
+  <header class="bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 p-4 flex justify-end gap-4">
+  <a href="{% url 'cart_detail' %}" class="text-white font-semibold hover:text-pink-300">
+    🛒 Корзина
+  </a>
+  <a href="{% url 'order_list' %}" class="text-white font-semibold hover:text-pink-300">
+    📜 История заказов
+  </a>
+</header>
+
+  <div class="max-w-6xl mx-auto fade-up">
+    <h1 class="text-4xl font-bold text-white text-center mb-8">Все продукты</h1>
+
+    <div class="flex justify-end mb-6">
+      <a href="{% url 'product_create' %}" class="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-lg">
+        Добавить продукт
+      </a>
+    </div>
+
+    {% if products %}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for product in products %}
+          <div class="bg-white bg-opacity-20 backdrop-blur-md p-4 rounded-xl shadow fade-up">
+            {% if product.image %}
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded mb-4">
+            {% endif %}
+            <h2 class="text-2xl text-white font-bold mb-2">{{ product.name }}</h2>
+            <p class="text-white mb-1">Цена: <strong>{{ product.price }} $</strong></p>
+            <p class="text-white mb-1">Остаток: {{ product.quantity }}</p>
+
+            <div class="flex gap-2 mt-4">
+              <a href="{% url 'product_detail' product.pk %}" class="bg-purple-600 text-white py-2 px-4 rounded-lg">Подробнее</a>
+              <a href="{% url 'product_update' product.pk %}" class="bg-yellow-500 text-white py-2 px-4 rounded-lg">Обновить</a>
+              <a href="{% url 'product_delete' product.pk %}" class="bg-red-600 text-white py-2 px-4 rounded-lg">Удалить</a>
+            </div>
+          </div>
+        {% endfor %}
+        
+      </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

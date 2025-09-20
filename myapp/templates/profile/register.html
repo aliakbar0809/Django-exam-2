@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+   
+    form p {
+      margin-bottom: 1rem;
+    }
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #fff;
+    }
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: box-shadow 0.2s ease-in-out;
+    }
+    form input:focus, form select:focus, form textarea:focus {
+      box-shadow: 0 0 0 2px #ec4899; 
+      border-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white bg-opacity-20 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg fade-up">
+    <h2 class="text-3xl font-bold text-white text-center mb-6">Регистрация</h2>
+
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+
+      <button type="submit"
+              class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg transition duration-300">
+        Зарегистрироваться
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>

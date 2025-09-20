@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Удалить продукт</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+
+    body {
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-600 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white bg-opacity-20 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg fade-up">
+    <h2 class="text-2xl font-bold text-white text-center mb-6">Вы уверены, что хотите удалить этот продукт?</h2>
+
+    <p class="text-white text-center mb-8 text-lg font-semibold">"{{ object.name }}"</p>
+
+    <form method="POST" class="flex justify-between">
+      {% csrf_token %}
+      
+      <a href="{% url 'product_list'  %}" 
+         class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+        Отмена
+      </a>
+
+      <button type="submit"
+              class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+        Удалить
+      </button>
+      
+    </form>
+  </div>
+
+</body>
+</html>

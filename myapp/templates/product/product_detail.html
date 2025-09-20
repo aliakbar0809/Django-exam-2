@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ product.name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-500 via-pink-500 to-indigo-600 min-h-screen flex items-center justify-center p-6">
+
+  <div class="bg-white bg-opacity-20 backdrop-blur-md p-8 rounded-2xl shadow-xl max-w-xl w-full fade-up">
+    <h1 class="text-3xl font-bold text-white text-center mb-6">{{ product.name }}</h1>
+
+    {% if product.image %}
+      <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-64 object-cover rounded-xl mb-4">
+    {% endif %}
+
+    <p class="text-white mb-2"><strong>Описание:</strong> {{ product.description }}</p>
+    <p class="text-white mb-2"><strong>Цена:</strong> {{ product.price }} $</p>
+    <p class="text-white mb-4"><strong>Остаток:</strong> {{ product.quantity }}</p>
+
+    <div class="flex justify-between mt-6">
+      <a href="{% url 'product_update' product.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded"> Редактировать</a>
+      <a href="{% url 'product_delete' product.pk %}" class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"> Удалить</a>
+    </div>
+
+    <a href="{% url 'product_list' %}" class="block text-white text-center mt-6 underline"><button class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-lg transition duration-300" >Назад к списку</button></a>
+    <form method="post" action="{% url 'cart_add' %}" class="mt-4 text-center">
+  {% csrf_token %}
+  <input type="hidden" name="product_id" value="{{ product.id }}">
+  <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white py-2 px-4 rounded-lg">
+    Добавить в корзину
+  </button>
+</form>
+  </div>
+
+</body>
+</html>
