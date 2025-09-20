@@ -34,14 +34,12 @@
         <thead>
           <tr class="border-b border-white/30">
             <th class="text-center p-2">Дата</th>
-            <th class="text-center p-2">Статус</th>
             <th class="text-center p-2">Сумма</th>
           </tr>
         </thead>
         <tbody>
           {% for order in orders %}
             <tr class="border-b border-white/20">
-              <td class="p-2">{{ order.id }}</td>
               <td class="text-center p-2">{{ order.created_at|date:"d.m.Y H:i" }}</td>
               <td class="text-center p-2">{{ order.total_amount }} $</td>
             </tr>

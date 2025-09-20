@@ -127,7 +127,7 @@ class ProductDeleteView(DeleteView):
 
 # Cart CARD
 
-class AddToCartView(CreateView):
+class CreateToCartView(CreateView):
     model = Cart
     success_url = reverse_lazy('cart_detail')
 
@@ -190,7 +190,7 @@ class OrderCreateView(CreateView):
 
         if not cart_items:
             return redirect('cart_list')
-        
+
         cnt = 0
 
         for item in cart_items:
