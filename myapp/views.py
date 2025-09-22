@@ -82,8 +82,13 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy('product_list')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        user_id = self.request.session.get('user_id')
+        if not user_id:
+            return redirect('login')
+        
+        form.instance.user_id = user_id
         return super().form_valid(form)
+
 
 
 
@@ -93,7 +98,9 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return Product.objects.filter(user=self.request.user)
+        user_id = self.request.session.get('user_id')
+        return Product.objects.filter(user_id=user_id)
+
     
 
 class ProductDetailView(DetailView):
@@ -102,7 +109,8 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
     def get_queryset(self):
-        return Product.objects.filter(user=self.request.user)
+        user_id = self.request.session.get('user_id')
+        return Product.objects.filter(user_id=user_id)
 
 
 
