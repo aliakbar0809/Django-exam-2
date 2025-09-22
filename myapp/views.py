@@ -143,7 +143,7 @@ class CreateToCartView(CreateView):
         if product.quantity < quantity or quantity < 1:
             return redirect('product_detail', pk=product.id)
 
-        # Если товар уже в корзине — увеличиваем количество
+        
         cart_item = Cart.objects.filter(user_id=user_id, product=product).first()
         if cart_item:
             new_quantity = cart_item.quantity + quantity
