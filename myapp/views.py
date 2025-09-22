@@ -126,7 +126,6 @@ class ProductDeleteView(DeleteView):
     
 
 # Cart CARD
-
 class CreateToCartView(CreateView):
     model = Cart
     success_url = reverse_lazy('cart_detail')
@@ -137,20 +136,26 @@ class CreateToCartView(CreateView):
         
         user_id = request.session.get('user_id')
         product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))
+
         product = get_object_or_404(Product, id=product_id)
 
-        if product.quantity < 1:
-            return redirect('product_list')
+        if product.quantity < quantity or quantity < 1:
+            return redirect('product_detail', pk=product.id)
 
-    
+        # Если товар уже в корзине — увеличиваем количество
         cart_item = Cart.objects.filter(user_id=user_id, product=product).first()
         if cart_item:
-            cart_item.quantity += 1
+            new_quantity = cart_item.quantity + quantity
+            if new_quantity > product.quantity:
+                new_quantity = product.quantity
+            cart_item.quantity = new_quantity
             cart_item.save()
         else:
-            Cart.objects.create(user_id=user_id, product=product, quantity=1)
+            Cart.objects.create(user_id=user_id, product=product, quantity=quantity)
 
-        return redirect('cart_detail')  
+        return redirect('cart_detail')
+
 
 
 
